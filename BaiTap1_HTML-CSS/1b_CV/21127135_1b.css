@@ -1,0 +1,83 @@
+:root {
+    --main-light-color: #f0b99b;
+    --main-dark-color: #505c6a;
+}
+
+header > div {
+    background-color: var(--main-light-color);
+
+    & img {
+        max-width: 100%;
+        height: auto;
+        max-height: 250px;
+        object-fit: contain;
+    }
+
+    & #intro {
+        border-left: 3px solid;
+        border-image: linear-gradient(
+                to bottom,
+                transparent 10%,
+                black 10%,
+                black 80%,
+                transparent 80%
+            )
+            1 100%;
+    }
+}
+
+main > div {
+    background-color: var(--main-dark-color);
+
+    & p i {
+        margin-right: 20px;
+        color: var(--main-light-color);
+    }
+
+    & .personal-heading {
+        border-bottom: 3px solid var(--main-light-color);
+        padding-bottom: 8px;
+        font-weight: bolder;
+        margin-bottom: 15px;
+    }
+
+    & .personal-info {
+        & h6 {
+            color: var(--main-light-color);
+            margin-bottom: 10px;
+        }
+    }
+
+    & .exp-heading {
+        padding: 8px 0 8px 15px;
+        font-weight: bolder;
+        margin-bottom: 20px;
+        background-image: linear-gradient(
+            to right,
+            var(--main-dark-color) 80%,
+            var(--main-light-color) 80%
+        );
+        color: white;
+    }
+
+    & .exp-info {
+        color: var(--main-dark-color);
+
+        & h6 {
+            font-weight: 900;
+            font-size: 1.1rem;
+        }
+
+        & .work-role {
+            margin-bottom: 0.4rem;
+            color: var(--main-light-color);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        & .work-period {
+            margin-bottom: 0.4rem;
+            font-weight: bold;
+        }
+    }
+}

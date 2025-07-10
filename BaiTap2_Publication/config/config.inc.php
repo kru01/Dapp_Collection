@@ -1,0 +1,11 @@
+<?php
+$host = 'localhost';
+$dbname = 'PublicationDB';
+$username = 'root';
+$password = 'root';
+
+$mysqli = new mysqli($host, $username, $password, $dbname);
+if ($mysqli->connect_error) {
+    echo "Connection failed: " . $mysqli->connect_error;
+    die("Connection failed: " . $mysqli->connect_error);
+}

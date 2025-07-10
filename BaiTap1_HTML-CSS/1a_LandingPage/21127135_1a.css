@@ -1,0 +1,407 @@
+:root {
+    --primary-color: #40eefe;
+    --secondary-color: #0055bb;
+    --dampen-color: #5b5b5e;
+}
+
+p {
+    color: var(--dampen-color);
+    font-family: "Roboto";
+    font-size: 18px;
+    line-height: 26px;
+    letter-spacing: 0.2px;
+}
+
+.share-btn-group {
+    text-align: right;
+    font-family: "Raleway";
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 24px;
+    color: var(--secondary-color);
+
+    img {
+        width: 30px;
+    }
+}
+
+.banner {
+    h1 {
+        font-family: "Raleway";
+        font-weight: bold;
+        font-size: 28px;
+        line-height: 40px;
+        letter-spacing: 0.45px;
+    }
+
+    h3 {
+        font-family: "Raleway";
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 32px;
+        letter-spacing: 0.3px;
+    }
+
+    h4 {
+        font-family: "Raleway";
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 28px;
+        letter-spacing: 0.25px;
+    }
+}
+
+.link-with-arrow {
+    text-decoration: none;
+    font-family: "Roboto";
+    font-weight: bold;
+    text-align: center;
+    color: #40eefe;
+
+    i {
+        margin-left: 5px;
+        font-size: 20px;
+        color: #40eefe;
+        position: relative;
+        top: 3px;
+    }
+}
+
+header.active {
+    background-color: #fff;
+    border-bottom: 1px solid #bab9d3;
+}
+
+header > div {
+    font-family: "Raleway";
+    line-height: 24px;
+    padding: 21px 0;
+    letter-spacing: 0.2px;
+
+    & .logo img {
+        max-width: 67px;
+        height: auto;
+    }
+
+    & .navbar {
+        height: 100%;
+    }
+
+    & .nav-item {
+        & .nav-link {
+            font-size: 16px;
+            color: #0b0b16;
+            font-weight: 600;
+            padding: 10px 20px !important;
+        }
+
+        &:first-child .nav-link {
+            padding-left: 0px !important;
+        }
+
+        &:last-child .nav-link {
+            padding-right: 0px !important;
+        }
+
+        &.active .nav-link,
+        & .nav-link:hover {
+            color: var(--secondary-color);
+        }
+    }
+
+    & .offcanvas {
+        gap: 5rem;
+        width: 100% !important;
+        transition: 0.3s linear all;
+    }
+
+    & .offcanvas-body {
+        padding: 0;
+
+        & nav {
+            padding: 0 15px;
+            margin-bottom: 12rem;
+        }
+
+        & .nav-item {
+            &:not(:last-child) {
+                border-bottom: 1px solid #dcdce9;
+            }
+
+            & .nav-link {
+                padding: 15px 0 !important;
+                font-family: "Lato";
+                font-weight: bold;
+                font-size: 1.2rem;
+                color: rgba(0, 0, 0, 0.5);
+            }
+
+            &.active .nav-link {
+                color: rgba(0, 0, 0, 0.9);
+            }
+
+            & .nav-link:hover {
+                color: rgba(0, 0, 0, 0.7);
+            }
+        }
+
+        & .offcanvas-footer {
+            & img {
+                width: 100%;
+                max-width: 196px;
+            }
+
+            & .copyright-text {
+                color: #9a9a9c;
+                opacity: 0.5;
+                text-align: center;
+            }
+        }
+    }
+}
+
+#topBanner {
+    & .row > div {
+        width: 100%;
+        height: 600px;
+        background: url(https://kiki.zalo.ai/public/img/home/Pic_table_2100x900_cake_7-min.png)
+            no-repeat center center;
+        background-size: cover;
+        padding: 0 5.5rem;
+
+        & img.d-block {
+            height: 120vw;
+        }
+    }
+
+    & h1 span {
+        margin-bottom: 20px;
+        display: block;
+        font-family: "Raleway", sans-serif;
+        font-weight: 900;
+        font-size: 52px;
+        line-height: 66px;
+        letter-spacing: 0.5px;
+        color: var(--secondary-color);
+
+        &:first-child {
+            color: #40eefe;
+        }
+    }
+}
+
+#learnMore {
+    & > div.container {
+        height: 364px;
+        position: relative;
+
+        & > div.row {
+            position: absolute;
+            width: 100%;
+
+            h1 {
+                color: var(--secondary-color);
+                text-align: center;
+            }
+        }
+    }
+}
+
+#benefits {
+    & > div.container {
+        h1 {
+            color: var(--secondary-color);
+            span {
+                color: var(--primary-color);
+            }
+        }
+    }
+}
+
+#changeLife {
+    & > div.container {
+        position: relative;
+
+        & > a {
+            color: var(--primary-color);
+            font-weight: bold;
+            text-decoration: none;
+            position: absolute;
+            bottom: 20px;
+            left: 100px;
+            text-shadow: 2px 1px 2px gray, 0 0 1em gray, 0 0 0.2em gray;
+
+            & i {
+                font-size: 40px;
+                color: orange;
+            }
+
+            & span {
+                font-family: "Roboto";
+                font-size: 18px;
+                line-height: 26px;
+                letter-spacing: 0.2px;
+            }
+        }
+
+        & > img {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            cursor: pointer;
+        }
+    }
+}
+
+#wakeWord {
+    margin: 50px 0;
+    background: url(https://kiki.zalo.ai/public/img/home/Pic_3_4_home_2100_1167.jpg)
+        bottom;
+    background-size: cover;
+
+    & div.row {
+        & div:nth-child(2) {
+            text-align: center;
+
+            & h4 {
+                color: var(--dampen-color);
+            }
+
+            & img {
+                width: 310px;
+                height: auto;
+            }
+
+            & a {
+                font-size: 18px;
+            }
+        }
+    }
+}
+
+#smartSpeaker {
+    & > div {
+        background: url(https://kiki.zalo.ai/public/img/home/Pic_cuoi_table_1600x600.jpg)
+            right;
+        background-size: cover;
+        height: 370px;
+
+        & h1 {
+            color: var(--secondary-color);
+        }
+
+        & a {
+            font-size: 18px;
+        }
+    }
+}
+
+footer {
+    background-color: #011231;
+    color: #fff;
+
+    & div.row {
+        > div:first-child {
+            a > img {
+                width: 63px;
+                height: auto;
+                margin-bottom: 12px;
+                object-fit: contain;
+            }
+
+            span {
+                font-family: "Roboto";
+                font-size: 12px;
+                line-height: 20px;
+                letter-spacing: 0.15px;
+                color: #ffffff;
+                opacity: 0.5;
+            }
+        }
+
+        > div:last-child {
+            font-family: "Raleway";
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 24px;
+            color: #cdcdcd;
+
+            a > img {
+                width: 30px;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    #topBanner {
+        margin-top: 80px;
+
+        & .row > div {
+            height: 120vw;
+            padding: 0;
+
+            & div:has(> h1) {
+                position: absolute;
+                height: fit-content !important;
+                padding: 3rem 2.5rem;
+            }
+        }
+
+        & h1 span {
+            font-size: 2rem;
+            line-height: 1.2;
+        }
+    }
+
+    #learnMore {
+        & > div.container {
+            & > div.row h1 {
+                font-size: 20px;
+                line-height: 1.2;
+            }
+        }
+    }
+
+    #benefits {
+        & > div.container {
+            & div:has(> h1) {
+                text-align: center;
+            }
+
+            h1 {
+                color: var(--secondary-color);
+                span {
+                    color: var(--primary-color);
+                }
+            }
+        }
+    }
+
+    #changeLife {
+        & > div.container {
+            & > a {
+                left: 40px;
+            }
+        }
+    }
+
+    #smartSpeaker {
+        & > div {
+            height: auto;
+
+            & h1 {
+                text-shadow: 2px 1px 2px #d6d6d6, 0 0 1em white, 0 0 0.2em white;
+            }
+
+            & p {
+                text-shadow: 2px 1px 2px black, 0 0 1em gray, 0 0 0.2em gray;
+                color: white;
+            }
+
+            & a {
+                text-shadow: 2px 1px 2px #d6d6d6, 0 0 1em white, 0 0 0.2em white;
+            }
+        }
+    }
+}

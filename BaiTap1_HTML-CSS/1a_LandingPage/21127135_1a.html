@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>21127135 - 1a_LandingPage</title>
+
+		<!-- Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+			rel="stylesheet"
+		/>
+
+		<!-- Bootstrap -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+		/>
+
+		<!-- CSS -->
+		<link rel="stylesheet" href="./21127135_1a.css" />
+	</head>
+	<body>
+		<header class="active fixed-top">
+			<div class="container-fluid container-md">
+				<div class="row align-items-center align-items-md-stretch">
+					<div class="col-10 col-md-2">
+						<a href="#" class="logo">
+							<img
+								src="https://kiki.zalo.ai/public/img/shared/Logo_Kiki_DarkBlue_2022.png"
+								alt="Logo of Zalo's Kiki"
+							/>
+						</a>
+					</div>
+					<div class="col-2 col-md-8">
+						<nav class="navbar navbar-expand-md navbar-light py-0">
+							<div
+								class="container-fluid p-0 justify-content-end"
+							>
+								<button
+									class="navbar-toggler"
+									type="button"
+									data-bs-toggle="offcanvas"
+									data-bs-target="#offcanvasNavbar"
+									aria-controls="offcanvasNavbar"
+									aria-label="Toggle navigation"
+								>
+									<span class="navbar-toggler-icon"></span>
+								</button>
+
+								<div class="collapse navbar-collapse">
+									<ul class="navbar-nav mx-auto">
+										<li class="nav-item active">
+											<a class="nav-link" href="#"
+												>HOME</a
+											>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="#"
+												>SERVICES</a
+											>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="#"
+												>COMMANDS</a
+											>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" href="#"
+												>SPEAKER</a
+											>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</nav>
+					</div>
+					<div class="col-md-2 d-none d-md-block">
+						<div class="share-btn-group">
+							<span>Share via</span>
+							<a href="#"
+								><img
+									src="https://kiki.zalo.ai/public/img/shared/zalo-1.png"
+									alt="Icon for Sharing via Zalo"
+							/></a>
+							<a href="#"
+								><img
+									src="https://kiki.zalo.ai/public/img/shared/facebook-1.png"
+									alt="Icon for Sharing via Facebook"
+							/></a>
+						</div>
+					</div>
+				</div>
+
+				<div
+					class="offcanvas offcanvas-start"
+					tabindex="-1"
+					id="offcanvasNavbar"
+					aria-labelledby="offcanvasNavbarLabel"
+				>
+					<div class="offcanvas-header">
+						<div>
+							<a href="#" class="logo"
+								><img
+									src="https://kiki.zalo.ai/public/img/shared/header-logo-dark.png"
+									alt="Logo of Zalo's Kiki"
+							/></a>
+						</div>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="offcanvas"
+							aria-label="Close"
+						></button>
+					</div>
+
+					<div class="offcanvas-body">
+						<nav>
+							<ul class="navbar-nav mx-auto">
+								<li class="nav-item active">
+									<a class="nav-link" href="#">Home</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">Services</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">Commands</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">Speaker</a>
+								</li>
+							</ul>
+						</nav>
+
+						<div class="container offcanvas-footer">
+							<div class="row">
+								<div class="col-12">
+									<h6 class="text-dark text-center">
+										<b
+											>Kiki is now available on Android
+											and iPhone</b
+										>
+									</h6>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-6 py-3 text-end">
+									<a href="#"
+										><img
+											src="https://kiki.zalo.ai/public/img/shared/google-play.png"
+											alt="Button to get Kiki on Google Play"
+									/></a>
+								</div>
+								<div class="col-6 py-3">
+									<a href="#"
+										><img
+											src="https://kiki.zalo.ai/public/img/shared/app-store-fix.png"
+											alt="Button to get Kiki on App Store"
+									/></a>
+								</div>
+							</div>
+							<div class="row mt-4">
+								<div class="copyright-text">
+									Copyright © 2025 Kiki
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<section id="topBanner">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div
+							class="col-md-7 h-100 d-flex flex-column justify-content-center"
+						>
+							<h1>
+								<span>Meet Kiki</span>
+								<span>The Voice Assistant for Vietnamese</span>
+							</h1>
+							<p>
+								You can directly ask Kiki to do anything for
+								you.
+							</p>
+						</div>
+
+						<img
+							class="d-block d-md-none col-12"
+							src="https://kiki.zalo.ai/public/img/home/Pic_table_1000x1200_cake.png"
+							alt="Kiki banner"
+						/>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="learnMore" class="banner mt-4">
+			<div class="container d-flex flex-column justify-content-center">
+				<video
+					class="d-none d-md-block w-100"
+					type="video/mp4"
+					loop="true"
+					autoplay="autoplay"
+					tabindex="-1"
+					preload="auto"
+					playsinline
+					muted
+				>
+					<source
+						src="https://kiki.zalo.ai/public/img/home/slide_gray_2800X600_3.mp4"
+					/>
+				</video>
+				<video
+					class="d-block d-md-none w-100"
+					type="video/mp4"
+					loop="true"
+					autoplay="autoplay"
+					tabindex="-1"
+					preload="auto"
+					playsinline
+					muted
+				>
+					<source
+						src="https://kiki.zalo.ai/public/img/home/slide_gray_mobile.mp4"
+					/>
+				</video>
+				<div class="row justify-content-center">
+					<div class="col-md-8 d-flex flex-column">
+						<h1>
+							Applied AI that makes daily life<br />more
+							convenient and easier.
+						</h1>
+						<a
+							class="link-with-arrow"
+							href="https://zalo.ai/"
+							target="_blank"
+						>
+							Learn more
+							<i class="bi bi-arrow-right-circle-fill"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="benefits" class="banner">
+			<div class="container p-4">
+				<div class="row">
+					<div
+						class="col-md-6 d-flex flex-column justify-content-center"
+					>
+						<div>
+							<h1>
+								Enjoy life
+								<span>in a better way</span>
+								with Kiki
+							</h1>
+							<p>
+								The biggest advantage of Artificial Intelligence
+								is to bring an easier life without asking more
+								knowledge requirements.
+								<br />Powered by Zalo AI, Kiki is a voice
+								assistant tailor-made for all Vietnamese which
+								allows everyone to experience the benefits of
+								technology evolution.
+							</p>
+							<a class="link-with-arrow" href="#">
+								Learn how Kiki benefits you everyday
+								<i class="bi bi-arrow-right-circle-fill"></i>
+							</a>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<video
+							class="d-block d-md-none w-100"
+							type="video/mp4"
+							loop="true"
+							autoplay="autoplay"
+							preload="auto"
+							tabindex="-1"
+							playsinline
+							muted
+						>
+							<source
+								src="https://kiki.zalo.ai/public/img/home/Mobile_600x600_2.mp4"
+							/>
+						</video>
+						<video
+							class="d-none d-md-block w-100"
+							type="video/mp4"
+							loop="true"
+							autoplay="autoplay"
+							preload="auto"
+							tabindex="-1"
+							playsinline
+							muted
+						>
+							<source
+								src="https://kiki.zalo.ai/public/img/home/Screen_1000x1000_6.mp4"
+							/>
+						</video>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section id="changeLife" class="banner mt-4">
+			<div class="container">
+				<video
+					class="w-100"
+					type="video/mp4"
+					loop="true"
+					autoplay="autoplay"
+					preload="auto"
+					poster="https://kiki.zalo.ai/public/img/home/home-video-thumb-2.jpg"
+					tabindex="-1"
+					playsinline
+					muted
+				>
+					<source
+						src="https://kiki.zalo.ai/public/video/clip_1_c1.mp4"
+					/>
+				</video>
+				<a href="#" class="d-flex align-items-center">
+					<i class="bi bi-pause-circle-fill me-2"></i>
+					<span class="d-none d-sm-block"
+						>How Kiki can change your life</span
+					>
+				</a>
+				<img
+					src="https://kiki.zalo.ai/public/img/home/combined-shape.png"
+					alt="Fullscreen icon"
+				/>
+			</div>
+		</section>
+
+		<section id="wakeWord" class="banner">
+			<div class="container-fluid p-5">
+				<div class="row">
+					<div class="col-md-4 p-0 d-none d-md-block"></div>
+					<div
+						class="col-md-4 p-0 d-flex align-items-center justify-content-center"
+					>
+						<div>
+							<h4 class="font-weight-bold">
+								Everything you need, just start with
+							</h4>
+							<img
+								src="https://kiki.zalo.ai/public/img/home/kiki-button_2-01.png"
+								alt="Commands for Kiki"
+							/><br />
+							<a class="link-with-arrow my-4" href="#">
+								Learn more about commands
+								<i class="bi bi-arrow-right-circle-fill"></i>
+							</a>
+						</div>
+					</div>
+					<div class="col-md-4 p-0 d-none d-md-block"></div>
+				</div>
+			</div>
+		</section>
+
+		<section id="smartSpeaker" class="banner">
+			<div class="container p-5">
+				<div class="row">
+					<div
+						class="col-md-5 justify-content-center d-flex flex-column"
+					>
+						<div>
+							<h1>Wake Kiki up on <br />smart speaker</h1>
+							<p>
+								Now activated on smart speakers, Kiki is always
+								available for you.
+							</p>
+							<a class="link-with-arrow" href="#">
+								Learn more about Kiki Speaker
+								<i class="bi bi-arrow-right-circle-fill"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="banner">
+			<div class="container p-4 p-sm-5">
+				<div class="row">
+					<div class="col-md-8">
+						<h3 class="text-dark text-center text-sm-start">
+							Kiki is now available on Android and iPhone
+						</h3>
+						<p class="text-center text-sm-start p-1 pb-0 p-sm-0">
+							Android: 5.0 or higher / iOS: 11.0 or higher
+						</p>
+					</div>
+					<div
+						class="col-6 col-md-2 py-3 d-flex justify-content-center"
+					>
+						<a href="#">
+							<img
+								src="https://kiki.zalo.ai/public/img/shared/app-store-fix.png"
+								alt="Download on App Store"
+								class="w-100"
+							/>
+						</a>
+					</div>
+					<div
+						class="col-6 col-md-2 py-3 d-flex justify-content-center"
+					>
+						<a href="#">
+							<img
+								src="https://kiki.zalo.ai/public/img/shared/google-play.png"
+								alt="Download on Google Play"
+								class="w-100"
+							/>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<footer>
+			<div class="container py-4">
+				<div class="row">
+					<div class="col-6 col-md-2">
+						<div class="text-left d-flex flex-column">
+							<a href="#">
+								<img
+									src="https://kiki.zalo.ai/public/img/shared/Logo_Kiki_LightBlue_2022.png"
+									alt="Logo of Kiki"
+								/>
+							</a>
+							<span> Copyright © 2025 Kiki </span>
+						</div>
+					</div>
+					<div class="col-md-8 d-none d-md-block"></div>
+					<div class="col-6 col-md-2 align-self-center text-end">
+						<span class="text me-2"> Share via </span>
+						<a href="#">
+							<img
+								src="https://kiki.zalo.ai/public/img/shared/zalo-1.png"
+								alt="Share via Zalo"
+								class="me-1"
+							/>
+						</a>
+						<a href="#">
+							<img
+								src="https://kiki.zalo.ai/public/img/shared/facebook-1.png"
+								alt="Share via Facebook"
+							/>
+						</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+			crossorigin="anonymous"
+		></script>
+	</body>
+</html>
