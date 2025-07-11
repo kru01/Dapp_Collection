@@ -35,7 +35,9 @@ class HomeController
             $res->free();
         }
 
+        require_once("helpers/link_helper.php");
         require_once("helpers/date_helper.php");
+
         require("views/home/index.php");
     }
 }

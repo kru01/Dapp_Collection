@@ -28,6 +28,10 @@ class AuthorController
 
         $profile = json_decode($author['profile_json_text'], true);
 
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            echo 'JSON Error: ' . json_last_error_msg();
+        }
+
         $sql = "SELECT PA.paper_id, PA.title, PA.author_string_list,
                 CO.conference_id, CO.name AS conference_name, PAR.date_added, CO.end_date
             FROM PAPERS PA
@@ -46,7 +50,9 @@ class AuthorController
         // Check if the current view is the profile's owner
         $is_owner = (!empty($_SESSION['user']) && $_SESSION['user']['user_id'] == $user_id);
 
+        require_once("helpers/link_helper.php");
         require_once("helpers/date_helper.php");
+
         require("views/author/profile.php");
     }
 
@@ -65,19 +71,35 @@ class AuthorController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $full_name = $_POST['full_name'];
             $website = $_POST['website'];
+
             $profile_json_text = $_POST['profile_json_text'];
-            $image_path = '';
+            $profile_json_text = str_replace(["\r\n", "\n", "\r"], '\\n', $profile_json_text);
+
+            $image_path = null;
+
+            $fields = ['full_name = ?', 'website = ?', 'profile_json_text = ?'];
+            $params = [$full_name, $website, $profile_json_text];
+            $types = 'sss';
 
             if (!empty($_FILES['image']['name'])) {
-                $image_path = "uploads/{$user_id}_profile_"
-                    . basename($_FILES['image']['name']);
+                $filename = basename($_FILES['image']['name']);
+
+                $image_path = "uploads/{$user_id}_profile."
+                    . pathinfo($filename, PATHINFO_EXTENSION);
+
                 move_uploaded_file($_FILES["image"]["tmp_name"], $image_path);
+
+                $fields[] = 'image_path = ?';
+                $params[] = $image_path;
+                $types .= 's';
             }
 
-            $stmt = $mysqli->prepare("UPDATE AUTHORS
-                SET full_name=?, website=?, profile_json_text=?, image_path=?
-                WHERE user_id=?");
-            $stmt->bind_param("ssssi", $full_name, $website, $profile_json_text, $image_path, $user_id);
+            $fields_sql = implode(', ', $fields);
+            $params[] = $user_id;
+            $types .= 'i';
+
+            $stmt = $mysqli->prepare("UPDATE AUTHORS SET {$fields_sql} WHERE user_id=?");
+            $stmt->bind_param($types, ...$params);
             $stmt->execute();
 
             $message = "Profile updated.";

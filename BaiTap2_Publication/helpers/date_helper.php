@@ -4,8 +4,8 @@ function formatDateRange(
     $endStr = null,
     $separator = "–" // U+2013 "–" is used, and not the ASCII character U+002d "-"
 ) {
-    $start = new DateTime($startStr);
-    $end = $endStr ? new DateTime($endStr) : null;
+    $start = new DateTime(htmlspecialchars($startStr));
+    $end = $endStr ? new DateTime(htmlspecialchars($endStr)) : null;
 
 
     if (!$end) return $start->format('F j, Y') . " {$separator} ??";
