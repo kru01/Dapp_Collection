@@ -27,9 +27,20 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="index.php?controller=paper&action=search">Browse</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.php?controller=home&action=index">Submit</a></li>
+                </ul>
                 <ul class="navbar-nav ms-auto">
                     <?php if (!empty($_SESSION['user'])): ?>
-                        <li class="nav-item"><a class="nav-link" href="index.php?controller=author&action=profile">Hello, <?= htmlspecialchars($_SESSION['user']['username']) ?></a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?controller=author&action=profile">
+                                Hello, <?= htmlspecialchars($_SESSION['user']['username']) ?>
+                                <span class="badge text-bg-primary">
+                                    <?= htmlspecialchars($_SESSION['user']['user_type']) ?>
+                                </span>
+                            </a>
+                        </li>
                         <li class="nav-item"><a class="nav-link" href="index.php?controller=auth&action=logout">Logout</a></li>
                     <?php else: ?>
                         <li class="nav-item"><a class="nav-link" href="index.php?controller=auth&action=login">Login</a></li>

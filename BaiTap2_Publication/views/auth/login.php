@@ -10,7 +10,7 @@
     <form method="post" action="index.php?controller=auth&action=login">
         <div class="mb-3">
             <label>Username</label>
-            <input name="username" value="janedoe" class="form-control" required>
+            <input name="username" value="johnsmith" class="form-control" required>
         </div>
         <div class="mb-3">
             <label>Password</label>

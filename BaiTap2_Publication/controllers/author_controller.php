@@ -30,13 +30,19 @@ class AuthorController
 
         if (json_last_error() !== JSON_ERROR_NONE) {
             echo 'JSON Error: ' . json_last_error_msg();
+            $profile = [
+                'bio' => 'Please update your bio!',
+                'interests' => 'You haven\'t added any interest.'
+            ];
         }
 
-        $sql = "SELECT PA.paper_id, PA.title, PA.author_string_list,
-                CO.conference_id, CO.name AS conference_name, PAR.date_added, CO.end_date
+        $sql = "SELECT PA.paper_id, PA.title, CO.conference_id,
+                CO.name AS conference_name, PAR.date_added, CO.end_date,
+                TP.topic_name
             FROM PAPERS PA
                 JOIN CONFERENCES CO ON PA.conference_id = CO.conference_id
                 JOIN PARTICIPATION PAR ON PA.paper_id = PAR.paper_id
+                JOIN TOPICS TP ON PA.topic_id = TP.topic_id
             WHERE PAR.author_id = $user_id
             ORDER BY PAR.date_added DESC";
 

@@ -2,6 +2,14 @@
 
 <div class="container my-4">
     <h3><?= htmlspecialchars($paper['title']) ?></h3>
+    <div>
+        <span class="h6">
+            <span class="text-secondary">Paper#</span><span><?= $paper['paper_id'] ?></span>
+        </span>
+        <?php if ($is_latest): ?>
+            <span class="badge text-bg-success ms-2">Latest</span>
+        <?php endif ?>
+    </div>
 
     <dl class="row mt-4">
         <dt class="col-sm-3 text-end">Topic:</dt>
@@ -56,7 +64,7 @@
                 </dl>
 
                 <?php if (!empty($is_admin)): ?>
-                    <a href="index.php?controller=paper&action=remove&paper_id=<?= $paper['paper_id'] ?>&author_id=<?= $a['author_id'] ?>"
+                    <a href="index.php?controller=paper&action=removeAuthor&paper_id=<?= $paper['paper_id'] ?>&author_id=<?= $a['author_id'] ?>"
                         onclick="return confirm('Remove this author?')" class="btn btn-sm btn-danger">Remove</a>
                 <?php endif; ?>
             </li>
@@ -64,7 +72,7 @@
     </ul>
 
     <?php if (!empty($_SESSION['user']) && !$already_joined): ?>
-        <a href="index.php?controller=paper&action=join&id=<?= $paper['paper_id'] ?>" class="btn btn-success mt-3">Join as Member</a>
+        <a href="index.php?controller=paper&action=joinPaper&id=<?= $paper['paper_id'] ?>" class="btn btn-success mt-3">Join as Member</a>
     <?php endif; ?>
 </div>
 

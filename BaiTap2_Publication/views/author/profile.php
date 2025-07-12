@@ -1,7 +1,12 @@
 <?php include('views/partials/header.php'); ?>
 
 <div class="container my-4">
-    <h3>Personal Profile</h3>
+    <h3>Personal Profile
+        <span class="h5">
+            <span class="text-secondary">of User#</span><span><?= $author['user_id'] ?></span>
+        </span>
+    </h3>
+
     <div class="row mt-3">
         <div class="col-md-4">
             <!--
@@ -40,9 +45,16 @@
     <ul class="list-group">
         <?php foreach ($papers as $p): ?>
             <li class="list-group-item">
-                <strong><?= makeLinkPaper($p) ?></strong><br>
+                <strong><?= makeLinkPaper($p) ?>
+                    <small class="ms-2">
+                        <span class="text-secondary">
+                            #</span><?= htmlspecialchars($p['paper_id']) ?>
+                    </small>
+                </strong><br>
+
                 <small>Authors: <?= implode(', ', linkAuthors($p, $mysqli)) ?></small><br>
-                <small>Conference: <?= htmlspecialchars($p['conference_name']) ?></small><br>
+                <small>Conference: <?= htmlspecialchars($p['conference_name'])
+                                    ?> | Topic: <?= htmlspecialchars($p['topic_name']) ?></small><br>
                 <small>Participation Period: <?= formatDateRange($p['date_added'], $p['end_date']) ?></small>
             </li>
         <?php endforeach; ?>

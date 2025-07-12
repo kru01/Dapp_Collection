@@ -20,8 +20,8 @@ class HomeController
         foreach ($topics as $topic) {
             $tid = $topic['topic_id'];
 
-            $sql = "SELECT PA.paper_id, PA.title, PA.author_string_list,
-                    CO.conference_id, CO.name AS conference_name, CO.start_date, CO.end_date
+            $sql = "SELECT PA.paper_id, PA.title, CO.conference_id,
+                    CO.name AS conference_name, CO.start_date, CO.end_date
                 FROM PAPERS PA JOIN CONFERENCES CO
                     ON PA.conference_id = CO.conference_id
                 WHERE PA.topic_id = $tid

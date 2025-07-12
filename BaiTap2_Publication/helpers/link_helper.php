@@ -3,9 +3,12 @@ function makeLinkAuthor($author)
 {
     $name = htmlspecialchars($author['full_name']);
     $url = "index.php?controller=author&action=profile&id=" . $author['author_id'];
-    return "<a href=\"$url\"
-            class=\"link-secondary link-offset-2 link-underline-opacity-25
-                link-underline-opacity-100-hover\"
+
+    $color = $author['role'] === 'first_author' ? 'link-primary' : 'link-secondary';
+
+    return "<a href='$url'
+            class='$color link-offset-2 link-underline-opacity-25
+                link-underline-opacity-100-hover'
             >$name</a>";
 }
 
@@ -13,7 +16,7 @@ function linkAuthors($paper, $mysqli)
 {
     $paper_id = $paper['paper_id'];
 
-    $sql = "SELECT PAR.author_id, AU.full_name
+    $sql = "SELECT PAR.author_id, PAR.role, AU.full_name
             FROM PARTICIPATION PAR
                 JOIN AUTHORS AU ON PAR.author_id = AU.user_id
             WHERE PAR.paper_id = {$paper_id}
