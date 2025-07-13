@@ -12,8 +12,8 @@
             <div class="col-md-6">
                 <label for="author" class="form-label">
                     Author(s)
-                    <a data-bs-toggle="tooltip" data-bs-title="Enter author names separated by commas"
-                        data-bs-placement="right" tabindex="0" class="link-primary">
+                    <a data-bs-toggle="tooltip" data-bs-title='Enter author names separated by ", "<br>E.g., John Smith, jaNE doe'
+                        data-bs-placement="right" data-bs-html='true' tabindex="0" class="link-primary">
                         <i class="bi bi-info-circle"></i>
                     </a>
                 </label>

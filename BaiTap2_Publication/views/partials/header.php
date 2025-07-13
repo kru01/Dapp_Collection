@@ -29,7 +29,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link" href="index.php?controller=paper&action=search">Browse</a></li>
-                    <li class="nav-item"><a class="nav-link" href="index.php?controller=home&action=index">Submit</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.php?controller=paper&action=add">Submit</a></li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <?php if (!empty($_SESSION['user'])): ?>

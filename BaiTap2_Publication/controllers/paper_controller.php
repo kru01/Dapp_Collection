@@ -1,6 +1,12 @@
 <?php
 class PaperController
 {
+    private function get_topics($mysqli)
+    {
+        $res = $mysqli->query("SELECT * FROM TOPICS");
+        return $res->fetch_all(MYSQLI_ASSOC);
+    }
+
     function detail()
     {
         require_once("config/config.inc.php");
@@ -125,16 +131,13 @@ class PaperController
         exit();
     }
 
+    /*      ---- SEARCH PAGE ----
+     */
     function search()
     {
         require_once("config/config.inc.php");
 
-        $topics = [];
-        $res = $mysqli->query("SELECT * FROM TOPICS");
-
-        while ($row = $res->fetch_assoc()) {
-            $topics[] = $row;
-        }
+        $topics = $this->get_topics($mysqli);
 
         require("views/paper/search.php");
     }
@@ -272,5 +275,136 @@ class PaperController
                 </li>";
         }
         echo "</ul></nav>";
+    }
+
+    /*      ---- SUBMIT PAGE ----
+     */
+    function add()
+    {
+        require_once('config/config.inc.php');
+
+        if (empty($_SESSION['user'])) {
+            header('Location: index.php?controller=auth&action=login');
+            exit;
+        }
+
+        $topics = $this->get_topics($mysqli);
+
+        require_once('helpers/date_helper.php');
+        require('views/paper/add.php');
+    }
+
+    function ajax_search_conference()
+    {
+        require_once('config/config.inc.php');
+
+        $q = $mysqli->real_escape_string($_GET['q'] ?? '');
+
+        $sql = "SELECT conference_id AS `id`, `name`, abbreviation, `start_date`
+            FROM CONFERENCES
+            WHERE `name` LIKE '%{$q}%' OR abbreviation LIKE '%{$q}%'
+            ORDER BY `start_date` DESC
+            LIMIT 10";
+
+        $res = $mysqli->query($sql);
+        $results = $res->fetch_all(MYSQLI_ASSOC);
+
+        header('Content-Type: application/json');
+        echo json_encode($results);
+    }
+
+    function ajax_search_author()
+    {
+        require_once('config/config.inc.php');
+
+        $q = $mysqli->real_escape_string($_GET['q'] ?? '');
+
+        $where = !empty($_SESSION['user'])
+            ? 'AU.user_id != ' . (int) $_SESSION['user']['user_id'] . ' AND '
+            : '';
+
+        $where .= mb_substr($q, 0, 1) !== '#'
+            ? "(AU.full_name LIKE '%{$q}%' OR US.username LIKE '%{$q}%' OR US.email LIKE '%{$q}%')"
+            : "AU.user_id = " . (int) ltrim($q, '#');
+
+        $sql = "SELECT AU.user_id, AU.full_name, AU.image_path, US.username
+            FROM AUTHORS AU JOIN USERS US ON AU.user_id = US.user_id
+            WHERE {$where} ORDER BY AU.user_id ASC
+            LIMIT 10";
+
+        $res = $mysqli->query($sql);
+        $authors = $res->fetch_all(MYSQLI_ASSOC);
+
+        header('Content-Type: application/json');
+        echo json_encode($authors);
+    }
+
+    function save()
+    {
+        require_once('config/config.inc.php');
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || empty($_SESSION['user'])) {
+            header('Location: index.php?controller=auth&action=login');
+            exit;
+        }
+
+        $title = trim($_POST['title']);
+        $abstract = trim($_POST['abstract']);
+
+        $topic_id = intval($_POST['topic']);
+        $conf_id = intval($_POST['confId']);
+
+        $user_id = $_SESSION['user']['user_id'];
+
+        $sql = $mysqli->query("SELECT full_name FROM AUTHORS WHERE user_id = $user_id");
+        $author_string_list = $sql->fetch_assoc()['full_name'];
+
+        $authors = $_POST['authors'] ?? [];
+        $authors = array_filter($authors, fn($a) => $a['id'] != $user_id);
+
+        if (!empty($authors)) {
+            $author_names = array_map(fn($a) => trim($a['full_name']), $authors);
+            $author_string_list .= (', ' . implode(', ', $author_names));
+        }
+
+        try {
+
+            $stmt = $mysqli->prepare(
+                "INSERT INTO PAPERS (title, author_string_list, abstract, conference_id, topic_id, `user_id`)
+                VALUES (?, ?, ?, ?, ?, ?)"
+            );
+
+            $stmt->bind_param('sssiii', $title, $author_string_list, $abstract, $conf_id, $topic_id, $user_id);
+            $stmt->execute();
+            $stmt->close();
+        } catch (Throwable $e) {
+            echo ("Error: " . $e->getMessage());
+            die("An error occurred: " . $e->getMessage());
+        }
+
+        /*      ---- PARTICIPATION ----
+         */
+        $paper_id = $mysqli->insert_id;
+
+        $stmt = $mysqli->prepare(
+            "INSERT INTO PARTICIPATION (author_id, paper_id, `role`, date_added, `status`)
+            VALUES (?, ?, ?, NOW(), 'show')"
+        );
+
+        $role = 'first_author';
+        $stmt->bind_param('iis', $user_id, $paper_id, $role);
+        $stmt->execute();
+
+        foreach ($authors as $a) {
+            $aid = intval($a['id']);
+            $role = $a['role'];
+
+            $stmt->bind_param('iis', $aid, $paper_id, $role);
+            $stmt->execute();
+        }
+
+        header('Location: index.php?controller=paper&action=detail&id=' . $paper_id);
+        exit;
     }
 }
