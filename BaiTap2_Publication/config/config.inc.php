@@ -1,4 +1,8 @@
 <?php
+define('BASE_URL', '/BaiTap2_Publication/');
+
+/* MYSQL
+ */
 $host = 'localhost';
 $dbname = 'PublicationDB';
 $username = 'root';

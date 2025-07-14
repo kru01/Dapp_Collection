@@ -48,19 +48,21 @@
             <div id="authorResults" class="list-group mt-1"></div>
         </div>
 
+        <div id="authorPaginationBar"></div>
         <div id="selectedAuthors" class="mt-3"></div>
 
         <button class="btn btn-success mt-4">Submit Paper</button>
     </form>
 </div>
 
+<script src="<?= BASE_URL ?>public/js/pagination_helper.js"></script>
 <script>
     /*      ---- LOCAL STORAGE ----
      */
     const handleLocalStorage = (() => {
         const FORM_STORAGE_KEY = 'paperFormDraft';
 
-        function saveFormToStorage(selectedAuthors, authorRoles) {
+        function saveFormToStorage(selectedAuthors) {
             const formData = {
                 title: document.getElementById('title')?.value || '',
                 abstract: document.getElementById('abstract')?.value || '',
@@ -68,13 +70,12 @@
                 confId: document.getElementById('confId')?.value || '',
                 confInput: document.getElementById('confInput')?.value || '',
                 authors: selectedAuthors,
-                roles: authorRoles,
             };
 
             localStorage.setItem(FORM_STORAGE_KEY, JSON.stringify(formData));
         }
 
-        function loadFormFromStorage(selectedAuthors, authorRoles) {
+        function loadFormFromStorage(selectedAuthors) {
             const saved = localStorage.getItem(FORM_STORAGE_KEY);
             if (!saved) return;
 
@@ -88,7 +89,6 @@
 
                 if (data.authors && Array.isArray(data.authors)) {
                     selectedAuthors.splice(0, selectedAuthors.length, ...data.authors);
-                    authorRoles.splice(0, authorRoles.length, ...data.roles);
                 }
             } catch (err) {
                 console.error('Error loading draft:', err);
@@ -140,7 +140,7 @@
                     document.getElementById('confId').value = conf.id;
 
                     confResults.innerHTML = '';
-                    handleLocalStorage.saveFormToStorage(selectedAuthors, authorRoles);
+                    handleLocalStorage.saveFormToStorage(selectedAuthors);
 
                     return false;
                 };
@@ -152,16 +152,31 @@
         /*      ---- AUTHOR ----
          */
         let selectedAuthors = [];
-        let authorRoles = [];
+
+        let currentPage = 1;
+        const perPage = 5;
 
         const renderSelectedAuthors = () => {
             const container = document.getElementById('selectedAuthors');
+            const authorPaginationBar = document.getElementById('authorPaginationBar');
+
             container.innerHTML = '';
+            authorPaginationBar.innerHTML = '';
+
+            // Pagination logic
+            const totalPages = Math.max(1, Math.ceil(selectedAuthors.length / perPage));
+            currentPage = Math.min(currentPage, totalPages);
+
+            const start = (currentPage - 1) * perPage;
+            const end = start + perPage;
+            const authorsPage = selectedAuthors.slice(start, end);
 
             const listGroup = document.createElement('ul');
             listGroup.className = 'list-group';
 
-            selectedAuthors.forEach((author, index) => {
+            authorsPage.forEach((author, index) => {
+                const actualIndex = start + index;
+
                 const li = document.createElement('li');
                 li.className = 'list-group-item d-flex justify-content-between align-items-center';
 
@@ -185,38 +200,24 @@
                         </dd>
                     </dl>
 
-                    <input type="hidden" name="authors[${index}][id]" value="${author.id}">
-                    <input type="hidden" name="authors[${index}][full_name]" value="${author.full_name}">`;
-
-                // Role select (manually created since we bind its value)
-                // const roleSelect = document.createElement('select');
-                // roleSelect.className = 'form-select form-select-sm w-auto me-3';
-                // roleSelect.name = `authors[${index}][role]`;
-
-                // ['member', 'proofreader'].forEach(role => {
-                //     const option = document.createElement('option');
-                //     option.value = role;
-                //     option.textContent = role;
-                //     roleSelect.appendChild(option);
-                // });
+                    <input type="hidden" name="authors[${actualIndex}][id]" value="${author.id}">
+                    <input type="hidden" name="authors[${actualIndex}][full_name]" value="${author.full_name}">`;
 
                 // Role input
-                const roleVal = authorRoles[index] ?? 'member';
-
                 const roleInput = document.createElement('input');
-                roleInput.name = `authors[${index}][role]`;
+                roleInput.name = `authors[${actualIndex}][role]`;
                 roleInput.maxLength = 30;
                 roleInput.required = true;
-                roleInput.value = roleVal;
+                roleInput.value = author.role;
                 roleInput.className = "form-control w-auto me-3 role-select";
 
                 roleInput.addEventListener('input', (e) => {
-                    authorRoles[index] = e.target.value;
-                    handleLocalStorage.saveFormToStorage(selectedAuthors, authorRoles);
+                    author.role = e.target.value;
+                    handleLocalStorage.saveFormToStorage(selectedAuthors);
                 });
                 roleInput.addEventListener('blur', (e) => {
-                    authorRoles[index] = e.target.value;
-                    handleLocalStorage.saveFormToStorage(selectedAuthors, authorRoles);
+                    author.role = e.target.value;
+                    handleLocalStorage.saveFormToStorage(selectedAuthors);
                 });
 
                 // Remove button
@@ -227,11 +228,13 @@
                 removeBtn.textContent = 'Remove';
 
                 removeBtn.onclick = () => {
-                    selectedAuthors = selectedAuthors.filter(x => x.id !== author.id);
-                    authorRoles.splice(index, 1);
+                    selectedAuthors.splice(actualIndex, 1);
+
+                    const newTotalPages = Math.max(1, Math.ceil(selectedAuthors.length / perPage));
+                    if (currentPage > newTotalPages) currentPage = newTotalPages;
 
                     renderSelectedAuthors();
-                    handleLocalStorage.saveFormToStorage(selectedAuthors, authorRoles);
+                    handleLocalStorage.saveFormToStorage(selectedAuthors);
                 };
 
                 li.appendChild(roleInput);
@@ -241,6 +244,18 @@
             });
 
             container.appendChild(listGroup);
+
+            if (totalPages > 1) {
+                handlePagination.renderPaginationBar(
+                    authorPaginationBar,
+                    currentPage,
+                    totalPages,
+                    (newPage) => {
+                        currentPage = newPage;
+                        renderSelectedAuthors();
+                    }
+                );
+            }
         };
 
         const authorSearch = document.getElementById('authorSearch');
@@ -277,12 +292,13 @@
                             username: author.username,
                             full_name: author.full_name,
                             image_path: author.image_path,
+                            role: 'member'
                         });
 
                         authorSearch.value = '';
                         renderSelectedAuthors();
 
-                        handleLocalStorage.saveFormToStorage(selectedAuthors, authorRoles);
+                        handleLocalStorage.saveFormToStorage(selectedAuthors);
                     }
 
                     authorResults.innerHTML = '';
@@ -295,7 +311,7 @@
 
         /*      ---- INIT ----
          */
-        handleLocalStorage.loadFormFromStorage(selectedAuthors, authorRoles);
+        handleLocalStorage.loadFormFromStorage(selectedAuthors);
         renderSelectedAuthors();
 
         document.getElementById('paperForm').addEventListener('submit', (e) => {

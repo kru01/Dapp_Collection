@@ -77,9 +77,11 @@
             }
         }
 
+        let page = 1;
+
         document.getElementById('searchForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            loadPage(1);
+            loadPage(page);
         });
 
         const initForm = () => {
@@ -91,10 +93,22 @@
                 const val = params.get(field);
                 if (val) document.getElementById(field).value = val;
             })
+
+            page = params.get('page') ?? 1;
         }
 
         initForm();
-        document.getElementById('submitBtn').click();
+
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.click();
+
+        // Check if the page param is invalid
+        const resultContainer = document.getElementById('resultContainer');
+
+        if (!resultContainer.querySelector('h5')) {
+            page = 1;
+            submitBtn.click();
+        }
 
         return {
             loadPage

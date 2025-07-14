@@ -243,14 +243,17 @@ class PaperController
         // Output HTML
         require_once('helpers/link_helper.php');
         require_once('helpers/date_helper.php');
+        require_once('helpers/pagination_helper.php');
 
-        echo "<nav class='d-flex justify-content-center'><ul class='pagination'>";
-        for ($i = 1; $i <= $pages; $i++) {
-            echo "<li class='page-item'>
-                <a class='page-link' href='#' onclick='handleForm.loadPage($i); return false;'>$i</a>
-                </li>";
-        }
-        echo "</ul></nav>";
+        // echo "<nav class='d-flex justify-content-center'><ul class='pagination'>";
+        // for ($i = 1; $i <= $pages; $i++) {
+        //     echo "<li class='page-item'>
+        //         <a class='page-link' href='#' onclick='handleForm.loadPage({page: " . $i
+        //         . "}); return false;'>$i</a></li>";
+        // }
+        // echo "</ul></nav>";
+
+        render_pagination_bar($page, $pages, 'handleForm.loadPage');
 
         foreach ($papers as $p) {
             echo "<div class='border rounded p-2 mb-2'>";
@@ -267,14 +270,6 @@ class PaperController
             echo "<p><strong>Period:</strong> " . formatDateRange($p['start_date'], $p['end_date']) . "</p>";
             echo "</div>";
         }
-
-        echo "<nav class='d-flex justify-content-center'><ul class='pagination'>";
-        for ($i = 1; $i <= $pages; $i++) {
-            echo "<li class='page-item'>
-                <a class='page-link' href='#' onclick='handleForm.loadPage($i); return false;'>$i</a>
-                </li>";
-        }
-        echo "</ul></nav>";
     }
 
     /*      ---- SUBMIT PAGE ----
