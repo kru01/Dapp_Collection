@@ -12,7 +12,7 @@
             <div class="col-md-6">
                 <label for="author" class="form-label">
                     Author(s)
-                    <a data-bs-toggle="tooltip" data-bs-title='Enter author names separated by ", "<br>E.g., John Smith, jaNE doe'
+                    <a data-bs-toggle="tooltip" data-bs-title='Enter author names separated by ", ". Order must be first_author then by date joining the paper.<br>E.g., John Smith, jaNE doe'
                         data-bs-placement="right" data-bs-html='true' tabindex="0" class="link-primary">
                         <i class="bi bi-info-circle"></i>
                     </a>
@@ -79,7 +79,7 @@
 
         let page = 1;
 
-        document.getElementById('searchForm').addEventListener('submit', function(e) {
+        document.getElementById('searchForm').addEventListener('submit', (e) => {
             e.preventDefault();
             loadPage(page);
         });
@@ -99,16 +99,17 @@
 
         initForm();
 
-        const submitBtn = document.getElementById('submitBtn');
-        submitBtn.click();
+        (async () => {
+            await loadPage(page);
 
-        // Check if the page param is invalid
-        const resultContainer = document.getElementById('resultContainer');
+            // Check if the page param is invalid
+            const resultContainer = document.getElementById('resultContainer');
 
-        if (!resultContainer.querySelector('h5')) {
-            page = 1;
-            submitBtn.click();
-        }
+            if (page > 1 && !resultContainer.querySelector('h5')) {
+                page = 1;
+                await loadPage(page);
+            }
+        })();
 
         return {
             loadPage

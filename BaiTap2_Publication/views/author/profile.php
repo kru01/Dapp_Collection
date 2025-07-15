@@ -42,23 +42,41 @@
     </div>
 
     <h4 class="mt-5">Authored Papers</h4>
-    <ul class="list-group">
-        <?php foreach ($papers as $p): ?>
-            <li class="list-group-item">
-                <strong><?= makeLinkPaper($p) ?>
-                    <small class="ms-2">
-                        <span class="text-secondary">
-                            #</span><?= htmlspecialchars($p['paper_id']) ?>
-                    </small>
-                </strong><br>
-
-                <small>Authors: <?= implode(', ', linkAuthors($p, $mysqli)) ?></small><br>
-                <small>Conference: <?= htmlspecialchars($p['conference_name'])
-                                    ?> | Topic: <?= htmlspecialchars($p['topic_name']) ?></small><br>
-                <small>Participation Period: <?= formatDateRange($p['date_added'], $p['end_date']) ?></small>
-            </li>
-        <?php endforeach; ?>
-    </ul>
+    <div id="paperContainer"></div>
 </div>
+
+<script>
+    const handlePaper = (() => {
+        const loadAuthorPapers = async (page) => {
+            const res = await fetch(`index.php?controller=author&action=ajax_author_papers&id=<?= $user_id ?>&page=${page}`);
+            const html = await res.text();
+
+            document.getElementById('paperContainer').innerHTML = html;
+
+            const url = new URL(window.location.href);
+            url.searchParams.set('page', page);
+
+            window.history.pushState({}, '', url.toString());
+        }
+
+        (async () => {
+            const params = new URLSearchParams(window.location.search);
+            let page = params.get('page') ?? 1;
+
+            await loadAuthorPapers(page);
+
+            const paperList = document.getElementById('paperList');
+
+            if (+page > 1 && !paperList.querySelector('.list-group-item')) {
+                page = 1;
+                await loadAuthorPapers(page);
+            }
+        })();
+
+        return {
+            loadAuthorPapers
+        }
+    })();
+</script>
 
 <?php include('views/partials/footer.php'); ?>

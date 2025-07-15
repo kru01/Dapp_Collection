@@ -7,7 +7,6 @@ function formatDateRange(
     $start = new DateTime(htmlspecialchars($startStr));
     $end = $endStr ? new DateTime(htmlspecialchars($endStr)) : null;
 
-
     if (!$end) return $start->format('F j, Y') . " {$separator} ??";
 
     if ($start->format('Y') === $end->format('Y')) {

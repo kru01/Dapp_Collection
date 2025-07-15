@@ -76,4 +76,17 @@
     <?php endif; ?>
 </div>
 
+<?php if (!empty($_SESSION['rebuild_needed'])): ?>
+    <script>
+        fetch("index.php?controller=author&action=ajax_rebuild_author_string_list&paper_id=<?= $_SESSION['rebuild_needed'] ?>")
+        // .then(res => res.text())
+        // .then(text => {
+        //     if (text === 'ok') {
+        //         console.log('Rebuild completed');
+        //     }
+        // });
+    </script>
+<?php unset($_SESSION['rebuild_needed']);
+endif; ?>
+
 <?php include("views/partials/footer.php"); ?>

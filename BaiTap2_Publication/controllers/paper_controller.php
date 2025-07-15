@@ -105,6 +105,7 @@ class PaperController
             $stmt->execute();
         }
 
+        $_SESSION['rebuild_needed'] = $paper_id;
         header("Location: index.php?controller=paper&action=detail&id={$paper_id}");
         exit();
     }
@@ -127,6 +128,7 @@ class PaperController
         $stmt->bind_param('ss', $paper_id, $author_id);
         $stmt->execute();
 
+        $_SESSION['rebuild_needed'] = $paper_id;
         header("Location: index.php?controller=paper&action=detail&id={$paper_id}");
         exit();
     }

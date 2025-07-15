@@ -1,6 +1,8 @@
 # Misc
 test.*
 .vscode
+*.docx
+*.tmp
 
 # Builds
 /vendor/

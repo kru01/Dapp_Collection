@@ -7,7 +7,7 @@ const handlePagination = (() => {
 	 * - Current page ± radius
 	 * - Ellipses when there’s a gap
 	 */
-	function getPaginationRange(current, total, radius = 2, edge = 2) {
+	const getPaginationRange = (current, total, radius = 2, edge = 2) => {
 		if (total <= 1) return [1];
 		if (total <= edge * 2)
 			return Array.from({ length: total }, (_, i) => i + 1);
@@ -44,7 +44,58 @@ const handlePagination = (() => {
 		for (let i = total - edge + 1; i <= total; i++) pages.push(i);
 
 		return pages;
-	}
+	};
+
+	const createPaginationButton = ({
+		label,
+		page,
+		disabled = false,
+		isInput = false,
+		currentPage,
+		totalPages,
+		onPageChange,
+	}) => {
+		const li = document.createElement("li");
+		li.className = "page-item" + (disabled ? " disabled" : "");
+
+		if (isInput) {
+			const input = document.createElement("input");
+			input.type = "number";
+
+			input.min = 1;
+			input.max = totalPages;
+			input.value = currentPage;
+
+			input.className =
+				"form-control page-link text-center rounded-0 active";
+
+			input.onchange = (e) => {
+				const val = parseInt(e.target.value);
+
+				if (!isNaN(val) && val >= 1 && val <= totalPages)
+					onPageChange(val);
+			};
+
+			li.appendChild(input);
+		} else if (label === "...") {
+			li.classList.add("disabled");
+			li.innerHTML = `<span class="page-link">…</span>`;
+		} else {
+			const a = document.createElement("a");
+			a.href = "#";
+			a.className = "page-link";
+			a.textContent = label;
+
+			a.onclick = (e) => {
+				e.preventDefault();
+				if (!disabled) onPageChange(page);
+			};
+
+			li.appendChild(a);
+		}
+
+		return li;
+	};
 
 	/**
 	 * Render pagination bar into a container.
@@ -52,80 +103,75 @@ const handlePagination = (() => {
 	 * - currentPage, totalPages: integers
 	 * - onPageChange: function(pageNumber) => void
 	 */
-	function renderPaginationBar(
+	const renderPaginationBar = (
 		container,
 		currentPage,
 		totalPages,
 		onPageChange
-	) {
+	) => {
 		if (totalPages <= 1) return;
 
 		container.innerHTML = "";
+
 		const pagination = document.createElement("ul");
 		pagination.className = "pagination mt-2 flex-wrap";
 
-		const appendButton = (
-			label,
-			page,
-			disabled = false,
-			isInput = false
-		) => {
-			const li = document.createElement("li");
-			li.className = "page-item" + (disabled ? " disabled" : "");
-
-			if (isInput) {
-				const input = document.createElement("input");
-				input.type = "number";
-				input.min = 1;
-				input.max = totalPages;
-				input.value = currentPage;
-				input.className =
-					"form-control page-link text-center rounded-0 active";
-				input.onchange = (e) => {
-					const val = parseInt(e.target.value);
-					if (!isNaN(val) && val >= 1 && val <= totalPages) {
-						onPageChange(val);
-					}
-				};
-				li.appendChild(input);
-			} else if (label === "...") {
-				li.className += " disabled";
-				li.innerHTML = `<span class="page-link">…</span>`;
-			} else {
-				const a = document.createElement("a");
-				a.href = "#";
-				a.className = "page-link";
-				a.textContent = label;
-				a.onclick = (e) => {
-					e.preventDefault();
-					onPageChange(page);
-				};
-				li.appendChild(a);
-			}
-
-			pagination.appendChild(li);
-		};
+		const commonProps = { currentPage, totalPages, onPageChange };
 
 		// Prev
-		appendButton("« Prev", currentPage - 1, currentPage === 1);
+		pagination.appendChild(
+			createPaginationButton({
+				label: "« Prev",
+				page: currentPage - 1,
+				disabled: currentPage === 1,
+				...commonProps,
+			})
+		);
 
 		// Page numbers
 		const range = getPaginationRange(currentPage, totalPages);
 		range.forEach((p) => {
 			if (p === "...") {
-				appendButton("...", 0, true);
+				pagination.appendChild(
+					createPaginationButton({
+						label: "...",
+						page: 0,
+						disabled: true,
+						...commonProps,
+					})
+				);
 			} else if (p === currentPage) {
-				appendButton("", p, false, true); // input
+				pagination.appendChild(
+					createPaginationButton({
+						label: "",
+						page: p,
+						isInput: true,
+						...commonProps,
+					})
+				);
 			} else {
-				appendButton(p, p);
+				pagination.appendChild(
+					createPaginationButton({
+						label: p,
+						page: p,
+						...commonProps,
+					})
+				);
 			}
 		});
 
 		// Next
-		appendButton("Next »", currentPage + 1, currentPage === totalPages);
+		pagination.appendChild(
+			createPaginationButton({
+				label: "Next »",
+				page: currentPage + 1,
+				disabled: currentPage === totalPages,
+				...commonProps,
+			})
+		);
 
 		container.appendChild(pagination);
-	}
+	};
 
 	return {
 		renderPaginationBar,
