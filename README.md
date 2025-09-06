@@ -3,15 +3,30 @@
 # DApp - Collection
 
 -   Collection of stuffs from HCMUS's 2025 Distributed Applications course.
+-   [The Office](https://youtu.be/pEFQ3N-0pVw).
 
 <div align="center">
     <img alt="2_Profile" src="./BaiTap2_Publication/docs/forREADME/profile.png" width="49%" height="auto">
     <img alt="1b_CV" src="./BaiTap1_HTML-CSS/1b_CV.png" width="49%" height="auto">
 </div>
 <div align="center">
-    <img alt="2_Submit" src="./BaiTap2_Publication/docs/forREADME/submit.png" width="49%" height="auto">
+    <img alt="Final_Home" src="./Final_TheOffice/UDPT_CLC_DeThiCuoiKy/Home.png" width="49%" height="auto">
     <img alt="Lab1" src="./BTTH1_Microservice/Eureka.png" width="49%" height="auto">
 </div>
+
+<details open>
+  <summary>Table of Contents</summary>
+  <ul>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+  </ul>
+</details>
 
 ## Getting Started
 
@@ -92,6 +107,33 @@ In the IDE's `Preferences`, navigate to `Java`&rarr;`Installed JREs` and change 
 ...
 ```
 
+#### Final_TheOffice
+
+1. Run [`OfficeManagementDB.sql`](./Final_TheOffice/UDPT_CLC_DeThiCuoiKy/OfficeManagementDB.sql) to setup all the MySQL database and data.
+
+1. Navigate to [`config/config.inc.php`](./Final_TheOffice/config/config.inc.php) and change things as needed.
+
+    ```php
+    define('BASE_URL', '/Final_TheOffice/');
+
+    /* MYSQL */
+    $host = 'localhost';
+    $dbname = 'OfficeManagementDB';
+    $username = 'root';
+    $password = 'root';
+
+    $mysqli = new mysqli($host, $username, $password, $dbname);
+
+    if ($mysqli->connect_error) {
+        echo "Connection failed: " . $mysqli->connect_error;
+        die("Connection failed: " . $mysqli->connect_error);
+    }
+
+    $mysqli->set_charset("utf8");
+    ```
+
+    1. My PHP host is the default `htdocs` of MAMP so the _base_ index link is `http://localhost/Final_TheOffice/index.php`.
+
 ## Usage
 
 -   Read the docs (`.pdf`s) that come with each folder for contexts.
@@ -100,3 +142,6 @@ In the IDE's `Preferences`, navigate to `Java`&rarr;`Installed JREs` and change 
     -   [LabEx1 - Microservice basics](./BTTH1_Microservice/GioiThieuMicroservice.pdf).
     -   [LabEx2 - Business logic in Microservices](./BTTH2_CRUD/Business%20Logic%20In%20Microservices.pdf).
     -   [LabEx3 - Async communication in Microservices with RabbitMQ](./BTTH3_RabbitMQ/AsynchronousCommunication%20In%20Microservices.pdf).
+    -   [Final - Office management system](./Final_TheOffice/UDPT_CLC_DeThiCuoiKy/UDPT-DeThiCuoiKy-CLC2025_Final.pdf).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
